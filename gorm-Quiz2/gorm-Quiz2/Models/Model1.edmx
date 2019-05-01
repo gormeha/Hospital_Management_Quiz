@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DrugDetails">
+          <Key>
+            <PropertyRef Name="drugId" />
+          </Key>
+          <Property Name="drugId" Type="int" Nullable="false" />
+          <Property Name="drugName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="drugDescription" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="drugDosage" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="drugMethod" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="drugUnitsPerDay" Type="int" Nullable="false" />
+          <Property Name="drugStartDate" Type="date" Nullable="false" />
+          <Property Name="drugEndDate" Type="date" Nullable="false" />
+          <Property Name="PId" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PId" />
+          </Key>
+          <Property Name="PId" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="PFirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PLastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BedNo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WardDetails">
+          <Key>
+            <PropertyRef Name="WardId" />
+          </Key>
+          <Property Name="WardId" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="WardName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PId" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DrugDetails_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="DrugDetails" Type="Self.DrugDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PId" />
+            </Principal>
+            <Dependent Role="DrugDetails">
+              <PropertyRef Name="PId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WardDetails_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="WardDetails" Type="Self.WardDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PId" />
+            </Principal>
+            <Dependent Role="WardDetails">
+              <PropertyRef Name="PId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="DrugDetails" EntityType="Self.DrugDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WardDetails" EntityType="Self.WardDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DrugDetails_Patient" Association="Self.FK_DrugDetails_Patient">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="DrugDetails" EntitySet="DrugDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WardDetails_Patient" Association="Self.FK_WardDetails_Patient">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="WardDetails" EntitySet="WardDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DrugDetail">
+          <Key>
+            <PropertyRef Name="drugId" />
+          </Key>
+          <Property Name="drugId" Type="Int32" Nullable="false" />
+          <Property Name="drugName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="drugDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="drugDosage" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="drugMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="drugUnitsPerDay" Type="Int32" Nullable="false" />
+          <Property Name="drugStartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="drugEndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK_DrugDetails_Patient" FromRole="DrugDetails" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PId" />
+          </Key>
+          <Property Name="PId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BedNo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DrugDetails" Relationship="Self.FK_DrugDetails_Patient" FromRole="Patient" ToRole="DrugDetails" />
+          <NavigationProperty Name="WardDetails" Relationship="Self.FK_WardDetails_Patient" FromRole="Patient" ToRole="WardDetails" />
+        </EntityType>
+        <EntityType Name="WardDetail">
+          <Key>
+            <PropertyRef Name="WardId" />
+          </Key>
+          <Property Name="WardId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="WardName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK_WardDetails_Patient" FromRole="WardDetails" ToRole="Patient" />
+        </EntityType>
+        <Association Name="FK_DrugDetails_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="DrugDetails" Type="Self.DrugDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PId" />
+            </Principal>
+            <Dependent Role="DrugDetails">
+              <PropertyRef Name="PId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WardDetails_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="WardDetails" Type="Self.WardDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PId" />
+            </Principal>
+            <Dependent Role="WardDetails">
+              <PropertyRef Name="PId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities4" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DrugDetails" EntityType="Self.DrugDetail" />
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <EntitySet Name="WardDetails" EntityType="Self.WardDetail" />
+          <AssociationSet Name="FK_DrugDetails_Patient" Association="Self.FK_DrugDetails_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="DrugDetails" EntitySet="DrugDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WardDetails_Patient" Association="Self.FK_WardDetails_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="WardDetails" EntitySet="WardDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities4">
+          <EntitySetMapping Name="DrugDetails">
+            <EntityTypeMapping TypeName="Model.DrugDetail">
+              <MappingFragment StoreEntitySet="DrugDetails">
+                <ScalarProperty Name="drugId" ColumnName="drugId" />
+                <ScalarProperty Name="drugName" ColumnName="drugName" />
+                <ScalarProperty Name="drugDescription" ColumnName="drugDescription" />
+                <ScalarProperty Name="drugDosage" ColumnName="drugDosage" />
+                <ScalarProperty Name="drugMethod" ColumnName="drugMethod" />
+                <ScalarProperty Name="drugUnitsPerDay" ColumnName="drugUnitsPerDay" />
+                <ScalarProperty Name="drugStartDate" ColumnName="drugStartDate" />
+                <ScalarProperty Name="drugEndDate" ColumnName="drugEndDate" />
+                <ScalarProperty Name="PId" ColumnName="PId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="Model.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="PId" ColumnName="PId" />
+                <ScalarProperty Name="PFirstName" ColumnName="PFirstName" />
+                <ScalarProperty Name="PLastName" ColumnName="PLastName" />
+                <ScalarProperty Name="BedNo" ColumnName="BedNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WardDetails">
+            <EntityTypeMapping TypeName="Model.WardDetail">
+              <MappingFragment StoreEntitySet="WardDetails">
+                <ScalarProperty Name="WardId" ColumnName="WardId" />
+                <ScalarProperty Name="WardName" ColumnName="WardName" />
+                <ScalarProperty Name="PId" ColumnName="PId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

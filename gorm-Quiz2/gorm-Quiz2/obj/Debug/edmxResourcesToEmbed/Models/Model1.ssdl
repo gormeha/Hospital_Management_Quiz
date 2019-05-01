@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DrugDetails">
+    <Key>
+      <PropertyRef Name="drugId" />
+    </Key>
+    <Property Name="drugId" Type="int" Nullable="false" />
+    <Property Name="drugName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="drugDescription" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="drugDosage" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="drugMethod" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="drugUnitsPerDay" Type="int" Nullable="false" />
+    <Property Name="drugStartDate" Type="date" Nullable="false" />
+    <Property Name="drugEndDate" Type="date" Nullable="false" />
+    <Property Name="PId" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PId" />
+    </Key>
+    <Property Name="PId" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="PFirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PLastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="BedNo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WardDetails">
+    <Key>
+      <PropertyRef Name="WardId" />
+    </Key>
+    <Property Name="WardId" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="WardName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PId" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_DrugDetails_Patient">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="DrugDetails" Type="Self.DrugDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PId" />
+      </Principal>
+      <Dependent Role="DrugDetails">
+        <PropertyRef Name="PId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WardDetails_Patient">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="WardDetails" Type="Self.WardDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PId" />
+      </Principal>
+      <Dependent Role="WardDetails">
+        <PropertyRef Name="PId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="DrugDetails" EntityType="Self.DrugDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WardDetails" EntityType="Self.WardDetails" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DrugDetails_Patient" Association="Self.FK_DrugDetails_Patient">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="DrugDetails" EntitySet="DrugDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WardDetails_Patient" Association="Self.FK_WardDetails_Patient">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="WardDetails" EntitySet="WardDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

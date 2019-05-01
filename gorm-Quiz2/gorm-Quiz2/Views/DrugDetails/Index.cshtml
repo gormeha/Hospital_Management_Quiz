@@ -1,0 +1,75 @@
+﻿@model IEnumerable<gorm_Quiz2.Models.DrugDetail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.drugName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.drugDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.drugDosage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.drugMethod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.drugUnitsPerDay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.drugStartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.drugEndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patient.PFirstName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.drugName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.drugDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.drugDosage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.drugMethod)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.drugUnitsPerDay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.drugStartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.drugEndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient.PFirstName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.drugId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.drugId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.drugId })
+        </td>
+    </tr>
+}
+
+</table>

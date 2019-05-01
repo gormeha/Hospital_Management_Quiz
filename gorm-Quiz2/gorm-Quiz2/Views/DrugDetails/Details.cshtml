@@ -1,0 +1,82 @@
+﻿@model gorm_Quiz2.Models.DrugDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DrugDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.drugName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.drugName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.drugDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.drugDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.drugDosage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.drugDosage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.drugMethod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.drugMethod)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.drugUnitsPerDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.drugUnitsPerDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.drugStartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.drugStartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.drugEndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.drugEndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patient.PFirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patient.PFirstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.drugId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

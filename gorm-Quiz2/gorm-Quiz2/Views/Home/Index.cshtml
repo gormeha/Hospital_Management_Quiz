@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Welcome To Wellmeadows Hospital</h1>
+    <p class="lead">Get Yourself Updated Regarding Patient Details !!</p>
+   
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Patient Details","Index","Patients")</h2>
+        <p>
+            Here Is The InforMation About Patients...
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Drug Details", "Index", "DrugDetails")</h2>
+        <p>Get Yourself Updated Regarding Any Drug...</p>
+        
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Ward Details", "Index", "WardDetails")</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+      
+    </div>
+</div>
